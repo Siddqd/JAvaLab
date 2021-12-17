@@ -3,6 +3,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.awt.Insets;
 import java.util.Set;
+import java.util.Date;
 
 /**
  *
@@ -12,6 +13,7 @@ public class SimpleGUI extends JFrame  {
     
     private JButton buttonSort = new JButton("Make Sort ");
     private JButton buttonClear = new JButton("Clear Data ");
+    private JButton buttonRec = new JButton("Rec SortArr");
     private JTextField textFieldInput = new JTextField("",25);
     private JTextField textFieldOutput = new JTextField("",25);
     private JLabel labelInput = new JLabel("Input int array: ");
@@ -43,11 +45,15 @@ public class SimpleGUI extends JFrame  {
          container.add(buttonSort, new GridBagConstraints(0,2,1,1,1,1,
                 GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, 
                 new Insets (2, 2, 2, 2),0,0));
-        container.add(buttonClear, new GridBagConstraints(1,2,2,1,1,1,
+        container.add(buttonClear, new GridBagConstraints(2,2,1,1,1,1,
+                GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, 
+                new Insets (2, 2, 2, 2),0,0));
+        container.add(buttonRec, new GridBagConstraints(1,2,1,1,1,1,
                 GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, 
                 new Insets (2, 2, 2, 2),0,0));
         buttonSort.addActionListener(new ButtonSortEventListener());
         buttonClear.addActionListener(new ButtonClearEventListener());
+        buttonRec.addActionListener(new ButtonRecEventListener());
         textFieldInput.addActionListener(new TextFieldInputActionListener()) ;
          
        /* container.add(textFieldInput);
@@ -94,4 +100,19 @@ public class SimpleGUI extends JFrame  {
             textFieldInput.setText("");
         }
     }
+    
+    class ButtonRecEventListener implements ActionListener {
+        public void actionPerformed (ActionEvent e) {
+            Date date = new Date();
+            dbcon con2db = new dbcon();
+            con2db.setRectime(date.getHours()+":"+date.getMinutes()+":"+date.getSeconds());
+            con2db.setRecdate(date.getDay()+"."+date.getMonth()+"."+date.getYear());
+            con2db.setsortedarr(textFieldOutput.getText());
+            con2db.recToDB();
+            JOptionPane.showMessageDialog(null, "Record added to DB successfully",
+                        "Output", JOptionPane.PLAIN_MESSAGE);
+                
+            }
+    }
+    
 }
