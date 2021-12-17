@@ -2,15 +2,17 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.awt.Insets;
+import java.util.Set;
 
 /**
  *
  * @author Admin
  */
 public class SimpleGUI extends JFrame  {
+    
     private JButton buttonSort = new JButton("Make Sort ");
     private JButton buttonClear = new JButton("Clear Data ");
-    private JTextField textFieldInput = new JTextField("Press Enter after ending",25);
+    private JTextField textFieldInput = new JTextField("",25);
     private JTextField textFieldOutput = new JTextField("",25);
     private JLabel labelInput = new JLabel("Input int array: ");
     private JLabel labelOutput = new JLabel("Output sort array: ");
@@ -19,7 +21,7 @@ public class SimpleGUI extends JFrame  {
     //private JCheckBox check = new JCheckBox("Check", false);
     
     public SimpleGUI () {
-        super("Simple Example"); //название окна
+        super("Simple Dimple"); //название окна
         this.setBounds(500,500,250,100); //где и размеры окна
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
@@ -46,9 +48,9 @@ public class SimpleGUI extends JFrame  {
                 new Insets (2, 2, 2, 2),0,0));
         buttonSort.addActionListener(new ButtonSortEventListener());
         buttonClear.addActionListener(new ButtonClearEventListener());
-        
+        textFieldInput.addActionListener(new TextFieldInputActionListener()) ;
+         
        /* container.add(textFieldInput);
-        
         ButtonGroup group = new ButtonGroup(); //группа для чекбоксов
         group.add(radio1);
         group.add(radio2);
@@ -56,24 +58,40 @@ public class SimpleGUI extends JFrame  {
         radio1.setSelected(true); //первая кнопка выбрана по умолчанию
         container.add(radio2);
         container.add(buttonClear);
-        
         container.add(buttonText);*/
     }
-    class ButtonSortEventListener implements ActionListener {
+    class TextFieldInputActionListener implements ActionListener {
         public void actionPerformed (ActionEvent e) {
-            String message = "";
-            textFieldOutput.setText("1 2 3 4 5 6 7 8 9 10");
-            message += "Button was pressed\n";
-            message += textFieldInput.getText() + "Text is " + "\n";
-            //message += (radio1.isSelected() ? "Radio #1" : "Radio2") + "is selected!\n";
-            //message += "Checkbox is " + ((check.isSelected()) ? "checked" : "unchecked");
-            JOptionPane.showMessageDialog(null, message, "Output", JOptionPane.PLAIN_MESSAGE);
+                SortIns si = new SortIns();
+                si.setStr(textFieldInput.getText());
+                si.isErrorNumeric();
+                if (si.getErrMsg()!=null) {
+                    JOptionPane.showMessageDialog(null, si.getErrMsg(),
+                            "Output", JOptionPane.PLAIN_MESSAGE);
+                    textFieldOutput.setText("");
+                }
         }
     }
+       
+    class ButtonSortEventListener implements ActionListener {
+        public void actionPerformed (ActionEvent e) {
+            SortIns si = new SortIns();
+            si.setStr(textFieldInput.getText());
+            si.isErrorNumeric();
+            si.InsSort();
+            textFieldOutput.setText(si.getStr());
+            //message += "Button was pressed\n";
+            //message += textFieldInput.getText() + "Text is " + "\n";
+            //message += (radio1.isSelected() ? "Radio #1" : "Radio2") + "is selected!\n";
+            //message += "Checkbox is " + ((check.isSelected()) ? "checked" : "unchecked");
+            //JOptionPane.showMessageDialog(null, message, "Output", JOptionPane.PLAIN_MESSAGE);
+        }
+    }
+    
     class ButtonClearEventListener implements ActionListener {
         public void actionPerformed (ActionEvent e) {
             textFieldOutput.setText("");
-            textFieldInput.setText("Press Enter after ending");
+            textFieldInput.setText("");
         }
     }
 }

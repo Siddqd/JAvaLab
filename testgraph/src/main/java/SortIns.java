@@ -7,12 +7,12 @@ import java.util.Scanner;
  */
 public class SortIns {
     private String arrStr;
-    private ArrayList<Integer> al;
+    private ArrayList<Integer> al  = new ArrayList<>();
     private String ErrorMsg;
     
     public void SortIns() {
         arrStr = new String();
-        al = new ArrayList<>(0);
+        al = new ArrayList<>();
         ErrorMsg = "";
     }
        /* ArrayList <Integer> arl = new ArrayList<>(0);
@@ -28,13 +28,25 @@ public class SortIns {
         strToInt();
     }
     
-    public void set(String s) {
+    public void setStr(String s) {
         arrStr = s;
     }
     
-    public String get() {
+    public String getStr() {
         return arrStr;
     }
+    public void setAL(ArrayList<Integer> arl) {
+        al = arl;
+    }
+    
+    public ArrayList<Integer> getAL() {
+        return al;
+    }
+    
+    public String getErrMsg() {
+        return ErrorMsg;
+    }
+    
     
     /*public  void FillArray (ArrayList<Integer> al) {
         
@@ -57,7 +69,7 @@ public class SortIns {
         }
     }
     
-    private void InsSort (ArrayList<Integer> al) {
+    public void InsSort () {
         int x, j = 0;
         for (int i = 1; i < al.size(); i++) {
             x = al.get(i);
@@ -68,7 +80,13 @@ public class SortIns {
             }
             al.set(j,x);
         }
+        ErrorMsg = "";
+        arrStr = "";
+        for(Integer i : al) {
+            arrStr+= i.toString() + " ";
+        }
     }
+      
     private void PrintArr (ArrayList <Integer> al) {
         System.out.println("");
         for(Integer i : al) {
