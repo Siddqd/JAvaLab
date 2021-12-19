@@ -31,20 +31,21 @@ public class dbcon {
         Connection conn = null;
         Statement stmt = null;
         ResultSet rs = null;
-        String query = "INSERT arrtable(rectime,recdate,sortedarr) VALUES("+rectime+","+recdate+","+sortedarr+")";
+        String query = "INSERT arrtable(rectime,recdate,sortedarr) VALUES('"+rectime+"','"+recdate+"','"+sortedarr+"')";
         
         try {
             //Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SortArrDB",login,pass);
             stmt = conn.createStatement();
-            rs = stmt.executeQuery(query);
+            //rs = stmt.executeQuery(query);
+            stmt.executeUpdate(query);
         //} catch (ClassNotFoundException e) {
         } catch (SQLException sqlEx) {    
             sqlEx.printStackTrace();
         } finally {
             try { conn.close();} catch(SQLException se) {}
             try { stmt.close();} catch(SQLException se) {}
-            try { rs.close();} catch(SQLException se) {}
+            //try { rs.close();} catch(SQLException se) {}
         }
     }
 }
